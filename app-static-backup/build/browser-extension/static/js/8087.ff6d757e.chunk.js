@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_aws_threat_composer_app=self.webpackChunk_aws_threat_composer_app||[]).push([[8087],{28087:(t,e,s)=>{s.r(e),s.d(e,{default:()=>o});var a=s(25714),i=s(14571),r=s(80812);const o=()=>{const{state:t}=(0,i.zy)();return(0,r.jsx)(a.MitigationList,{initialFilter:null===t||void 0===t?void 0:t.filter})}}}]);
+//# sourceMappingURL=8087.ff6d757e.chunk.js.map
