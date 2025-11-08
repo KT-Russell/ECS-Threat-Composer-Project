@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_aws_threat_composer_app=self.webpackChunk_aws_threat_composer_app||[]).push([[5727],{75727:(s,a,e)=>{e.r(a),e.d(a,{default:()=>_});var p=e(25714),t=e(80812);const _=()=>(0,t.jsx)(p.AssumptionList,{})}}]);
-//# sourceMappingURL=5727.9954df59.chunk.js.map

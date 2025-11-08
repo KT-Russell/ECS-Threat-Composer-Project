@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_aws_threat_composer_app=self.webpackChunk_aws_threat_composer_app||[]).push([[9367],{69367:(e,a,s)=>{s.r(a),s.d(a,{default:()=>c});var t=s(25714),o=s(72176),r=s(14571),p=s(80812);const c=()=>{const e=(0,r.Zp)(),a=(0,o.useCallback)(((a,s,t,o)=>{const r=`fieldKey=${t}&fieldValue=${encodeURIComponent(o)}`;e(`/workspaces/${a}/threats/${s}?${r}`)}),[e]);return(0,p.jsx)(t.BrainstormBoard,{onNavigateToThreat:a})}}}]);
-//# sourceMappingURL=9367.581909d3.chunk.js.map
