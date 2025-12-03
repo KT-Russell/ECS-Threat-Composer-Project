@@ -1,6 +1,6 @@
 # Stage 1: Build Stage
 
-FROM node:20-alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app 
 
@@ -17,29 +17,28 @@ COPY . .
 RUN yarn build 
 
 # Stage 2: Serve app
-FROM node:20-alpine
+FROM node:18-alpine
+
+# Add a non-root user  
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup 
 
 WORKDIR /app
 
-# Copy package files first (to fix crash exit 0 code in ECS)
-COPY package.json yarn.lock ./
+# install production dependencies -serve to host static build
+RUN yarn global add serve 
 
-
-# install production dependencies -including express 
-RUN yarn install --production --frozen-lockfile
-
-# Copy over only the built output from builder stage
+# Copy over only the built files from builder stage
 COPY --from=builder /app/build ./build
-COPY server.js ./
 
-# Add a non-root user 
+# Change ownership for non-root execution
+RUN chown -R appuser:appgroup /app
 
-USER root
+# Swich to non-root user
+USER appuser
 
-# Expose port 80 internally
-EXPOSE 80
+EXPOSE 3000
 
 # Serve the abuild & health endpoint
-CMD [ "node", "server.js"]
+CMD ["serve", "-s", "build", "-l", "3000"]
 
 

@@ -1,0 +1,16 @@
+  PID TTY           TIME CMD
+26703 ttys000    0:00.49 -zsh
+26755 ttys000    0:00.00 -zsh
+26757 ttys000    0:00.00 -zsh
+26758 ttys000    0:00.04 -zsh
+26763 ttys000    0:00.07 /Users/admin/.cache/gitstatus/gitstatusd-darwin-arm64 -G v1.5.4 -s -1 -u -1 -d -1 -c -1 -m -1 -v FATAL -t 16
+  977 ttys002    0:08.22 /bin/zsh -l
+ 1144 ttys002    0:00.00 /bin/zsh -l
+ 1145 ttys002    0:00.00 /bin/zsh -l
+ 1147 ttys002    0:01.19 /bin/zsh -l
+ 1154 ttys002    0:01.91 /Users/admin/.cache/gitstatus/gitstatusd-darwin-arm64 -G v1.5.4 -s -1 -u -1 -d -1 -c -1 -m -1 -v FATAL -t 16
+  978 ttys004    0:22.06 /bin/zsh -l
+ 1127 ttys004    0:00.00 /bin/zsh -l
+ 1130 ttys004    0:01.31 /bin/zsh -l
+ 1131 ttys004    0:00.00 /bin/zsh -l
+ 1139 ttys004    0:05.73 /Users/admin/.cache/gitstatus/gitstatusd-darwin-arm64 -G v1.5.4 -s -1 -u -1 -d -1 -c -1 -m -1 -v FATAL -t 16

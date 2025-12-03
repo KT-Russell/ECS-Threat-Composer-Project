@@ -1,0 +1,62 @@
+name: Terraform Apply
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Terraform Plan"]
+    types:
+      - completed
+
+env: 
+  AWS_REGION: eu-west-2
+
+
+jobs:
+  terraform-apply:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    
+
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials 
+        uses: aws-actions/configure-aws-credentials@v4   
+        with: 
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Download Terraform Plan Artifact
+        uses: actions-download-artifact@v4
+        with:
+          name: tfplan
+          path: terraform 
+
+      - name: Terraform Init 
+        run: terraform init 
+        working-directory: terraform 
+
+      - name: Terraform Apply 
+        run: terraform apply -auto-approve tfplan
+        working-directory: terraform 
+
+
+      - name: Post-Deploy Health Check
+        run: curl -f https://tm.kamranr.com/health.json
+
+
+      - name: Job Summary
+        run: |
+          echo "## Terraform Apply Complete" >> $GITHUB_STEP_SUMMARY
+
+

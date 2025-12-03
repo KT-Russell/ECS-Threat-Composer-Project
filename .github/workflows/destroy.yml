@@ -1,0 +1,43 @@
+name: Terraform Destroy
+
+on:
+    workflow_dispatch:
+      inputs:
+        confirm:
+            description: "Types YES to confirm destroying ALL infrastructure"
+            required: true
+
+env:
+  AWS_REGION: eu-west-2
+
+
+jobs:
+  destroy:
+    # ONLY RUN IF user typed YES 
+    if: ${{ github.event.inputs.confirm == 'YES' }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout repository 
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials (OIDC)
+      uses: aws-actions/configure-aws-credentials@v4 
+      with:
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Setup Terraform 
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: terraform
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve  
+      working-directory: terraform

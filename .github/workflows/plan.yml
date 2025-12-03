@@ -1,0 +1,71 @@
+name: Terraform Plan
+
+
+on: 
+    workflow_dispatch:
+    workflow_run:
+       workflows: ["Build & Push Docker Image"] 
+       types: 
+        - completed 
+
+env:
+  AWS_REGION: eu-west-2
+
+jobs:
+  plan:
+    # Only run if the Docker workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'}} 
+    runs-on: ubuntu-latest  
+
+
+    permissions:
+      id-token: write
+      contents: read
+
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+        # Configure AWS Via OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github-terraform
+          aws-region: ${{ env.AWS_REGION }}
+    
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+        # recrusively check and diff formatting for ALL terraform files (including modules)
+      - name: Terraform format check
+        run: find . -name '*.tf' -exec terraform fmt -check -diff {} +
+        working-directory: terraform  
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: terraform
+
+      - name: Install and Run TFLint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          tflint --version
+          tflint --init --chdir==terraform   #initalise plugins and config
+          tflint --chdir=terraform           #lint against everything in terraform/dir
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+    
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: terraform 
+
+      - name: Upload Terraform Plan Artifact 
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: terraform/tfplan
+
+      
