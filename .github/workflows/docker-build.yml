@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: eu-west-2
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-  ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+  ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
   IMAGE_LOCAL_NAME: threat-mod-app
 
 jobs:
@@ -53,7 +53,7 @@ jobs:
         image-ref: ${{ env.IMAGE_LOCAL_NAME }}:latest
         format: table
         exit-code: 0 
-        
+
   #needed this debug for VAR issue with tags
      - name: Debug image + variables
        run: |
