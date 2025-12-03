@@ -1,11 +1,9 @@
 name: Terraform Apply
 
 on:
-  workflow_dispatch:
   workflow_run:
     workflows: ["Terraform Plan"]
-    types:
-      - completed
+    types: [completed]
 
 env: 
   AWS_REGION: eu-west-2
@@ -13,7 +11,7 @@ env:
 
 jobs:
   terraform-apply:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     
 
     runs-on: ubuntu-latest
