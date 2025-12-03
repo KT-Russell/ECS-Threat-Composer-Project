@@ -43,6 +43,10 @@ jobs:
         run: find . -name '*.tf' -exec terraform fmt -check -diff {} +
         working-directory: terraform  
 
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+
       - name: Terraform Validate
         run: terraform validate
         working-directory: terraform
@@ -53,10 +57,6 @@ jobs:
           tflint --version
           tflint --init --chdir==terraform   #initalise plugins and config
           tflint --chdir=terraform           #lint against everything in terraform/dir
-
-      - name: Terraform Init
-        run: terraform init
-        working-directory: terraform
     
       - name: Terraform Plan
         run: terraform plan -out=tfplan
