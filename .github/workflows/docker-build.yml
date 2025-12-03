@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-  ECR-REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
   ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY}}
   IMAGE_LOCAL_NAME: threat-mod-app
 
@@ -54,6 +54,10 @@ jobs:
         format: table
         exit-code: 0 
 
+
+     - name: Generate Image SHA Tag 
+       run: echo "IMAGE_TAG_SHA=$(git rev-parse --short HEAD)">> $GITHUB_ENV
+       
     # STEP 6: TAG images for ECR (LATEST & SHA)
      - name: Image Tags for ECR (latest tag & SHA)
        run: |
@@ -63,7 +67,7 @@ jobs:
     # STEP 7: PUSH IMAGE TO ECR 
      - name: Push Image to ECR
        run: |
-         docker push $ECR_REGISTRY/$ECR_REPOSITORY: latest
+         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_SHA
     
     # STEP 8: JOB CONFIRMATION SUMMARY 
