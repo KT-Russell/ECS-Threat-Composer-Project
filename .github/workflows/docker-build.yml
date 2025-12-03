@@ -53,7 +53,18 @@ jobs:
         image-ref: ${{ env.IMAGE_LOCAL_NAME }}:latest
         format: table
         exit-code: 0 
-  
+        
+  #needed this debug for VAR issue with tags
+     - name: Debug image + variables
+       run: |
+         echo "IMAGE_LOCAL_NAME=$IMAGE_LOCAL_NAME"
+         echo "ECR_REGISTRY=$ECR_REGISTRY"
+         echo "ECR_REPOSITORY=$ECR_REPOSITORY"
+         echo "IMAGE_TAG_SHA=$IMAGE_TAG_SHA"
+         echo "--- Docker Images ---"
+         docker images
+
+
       #Generate SHA tag
      - name: Generate Image SHA Tag 
        run: echo "IMAGE_TAG_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
