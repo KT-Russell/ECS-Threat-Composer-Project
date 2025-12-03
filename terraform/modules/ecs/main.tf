@@ -8,22 +8,22 @@ resource "aws_ecs_cluster" "threat-mod" {
 }
 
 resource "aws_security_group" "ecs_service_sg" {
-  name = "ecs-service-sg"
+  name        = "ecs-service-sg"
   description = "SG for ECS Task"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
-    description = "Allow inbound ONLY from ALB SG"
-    from_port = var.container_port
-    to_port = var.container_port
-    protocol = "tcp"
+    description     = "Allow inbound ONLY from ALB SG"
+    from_port       = var.container_port
+    to_port         = var.container_port
+    protocol        = "tcp"
     security_groups = [var.lb_security_group_id]
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

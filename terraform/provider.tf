@@ -5,7 +5,7 @@ terraform {
     region         = "eu-west-2"
     dynamodb_table = "tm-terraform-lock"
     encrypt        = true
-    }
+  }
 
   required_providers {
     aws = {
@@ -13,7 +13,7 @@ terraform {
       version = "~> 5.0"
     }
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "~> 4.0"
     }
   }
@@ -28,4 +28,4 @@ provider "cloudflare" {
 }
 
 
-  
+

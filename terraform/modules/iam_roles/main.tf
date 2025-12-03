@@ -1,19 +1,19 @@
 resource "aws_iam_role" "ecs_execution" {
   name = var.ecs_execution_role_name
-  
+
   lifecycle {
     create_before_destroy = true
   }
-  
+
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-        Effect = "Allow"
-        Principal = {
-          Service = var.ecs_assume_service 
-        },
-        Action = "sts:AssumeRole"
-        Sid    = ""
+      Effect = "Allow"
+      Principal = {
+        Service = var.ecs_assume_service
+      },
+      Action = "sts:AssumeRole"
+      Sid    = ""
       }
     ]
   })

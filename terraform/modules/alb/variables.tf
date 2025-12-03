@@ -3,28 +3,28 @@ variable "alb_name" {
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "VPC ID where ALB will be deployed"
 }
 
 variable "public_subnets_ids" {
-  type = list(string)
+  type        = list(string)
   description = "Public subnet IDs for ALB"
 }
 
 variable "health_check_path" {
-  type = string
-  default = "/health.json"
+  type        = string
+  default     = "/health.json"
   description = "Target group Health check path"
 }
 
 variable "environment" {
-  type = string
+  type    = string
   default = "dev"
 }
 
 variable "target_type" {
-  type = string
+  type    = string
   default = "ip"
 }
 
@@ -34,8 +34,8 @@ variable "certificate_arn" {
 }
 
 variable "ssl_policy" {
-  type    = string
-  default = "ELBSecurityPolicy-2016-08"
+  type        = string
+  default     = "ELBSecurityPolicy-2016-08"
   description = "SSL policy for https listener"
 }
 

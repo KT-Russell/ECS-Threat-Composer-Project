@@ -1,8 +1,8 @@
 resource "aws_lb" "main" {
-  name = var.alb_name
-  internal = false 
-  subnets = var.public_subnets_ids
-  security_groups = [aws_security_group.alb_sg.id]
+  name               = var.alb_name
+  internal           = false
+  subnets            = var.public_subnets_ids
+  security_groups    = [aws_security_group.alb_sg.id]
   load_balancer_type = "application"
 
   tags = {
@@ -20,24 +20,24 @@ resource "aws_security_group" "alb_sg" {
 
   ingress {
     description = "Allow HTTP traffic"
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     description = "Allow HTTPS"
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     description = "Allow outbound traffic"
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -63,10 +63,10 @@ resource "aws_lb_target_group" "tg" {
     timeout             = "5"
     healthy_threshold   = "2"
     unhealthy_threshold = 2
-  } 
+  }
 
   tags = {
-    Name = "${var.alb_name}-tg"
+    Name        = "${var.alb_name}-tg"
     Environment = var.environment
   }
 }
@@ -90,12 +90,12 @@ resource "aws_lb_listener" "http" {
 
 # HTTPS Listener
 resource "aws_lb_listener" "https" {
-  load_balancer_arn  = aws_lb.main.arn
-  port               = 443
-  protocol           = "HTTPS"
+  load_balancer_arn = aws_lb.main.arn
+  port              = 443
+  protocol          = "HTTPS"
 
-  ssl_policy         = var.ssl_policy
-  certificate_arn    = var.certificate_arn
+  ssl_policy      = var.ssl_policy
+  certificate_arn = var.certificate_arn
 
   default_action {
     type             = "forward"

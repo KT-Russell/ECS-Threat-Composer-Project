@@ -118,12 +118,12 @@ variable "image_url" {
 }
 
 variable "cloudflare_api_token" {
-  type = string
+  type        = string
   description = "API token with DNS edit permissions"
 }
 
 variable "cloudflare_zone_id" {
-  type = string
+  type        = string
   description = "Cloudflare zone ID for kamranr.com"
 }
 
@@ -136,7 +136,7 @@ variable "target_type" {
 }
 
 variable "ssl_policy" {
-  type = string
+  type    = string
   default = "ELBSecurityPolicy-2016-08"
 }
 

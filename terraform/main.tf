@@ -2,23 +2,23 @@ module "vpc" {
   source             = "./modules/vpc"
   vpc_cidr           = var.vpc_cidr
   public_subnets     = var.public_subnets
-  availability_zones = var.availability_zones 
+  availability_zones = var.availability_zones
   tags               = var.tags
 }
 
 # ALB Module 
 module "alb" {
   source = "./modules/alb"
-  
-  alb_name = "threat-mod-alb"
-  vpc_id = module.vpc.vpc_id
+
+  alb_name           = "threat-mod-alb"
+  vpc_id             = module.vpc.vpc_id
   public_subnets_ids = module.vpc.public_subnets_ids
-  
-  target_type = var.target_type
+
+  target_type       = var.target_type
   target_group_name = var.target_group_name
   health_check_path = var.health_check_path
-  
-  ssl_policy = var.ssl_policy 
+
+  ssl_policy      = var.ssl_policy
   certificate_arn = module.acm.certificate_arn
 }
 
@@ -31,18 +31,18 @@ module "ecr" {
 }
 
 module "iam_roles" {
-  source                   = "./modules/iam_roles"
-  ecs_execution_role_name  = var.ecs_execution_role_name
-  ecs_task_role_name       = var.ecs_task_role_name
-  tags                     = var.tags
-  ssm_parameter_arn        = var.ssm_parameter_arn
-  kms_key_arn              = var.kms_key_arn
+  source                  = "./modules/iam_roles"
+  ecs_execution_role_name = var.ecs_execution_role_name
+  ecs_task_role_name      = var.ecs_task_role_name
+  tags                    = var.tags
+  ssm_parameter_arn       = var.ssm_parameter_arn
+  kms_key_arn             = var.kms_key_arn
 }
 
 module "ecs" {
   source = "./modules/ecs"
-  
-  vpc_id = module.vpc.vpc_id
+
+  vpc_id               = module.vpc.vpc_id
   lb_security_group_id = module.alb.alb_security_group_id
 
   #logging
@@ -54,10 +54,10 @@ module "ecs" {
 
 
   #ecs cluster settings
-  cluster_name  = var.cluster_name
-  cluster_insight_name = var.cluster_insight_name
+  cluster_name          = var.cluster_name
+  cluster_insight_name  = var.cluster_insight_name
   cluster_insight_value = var.cluster_insight_value
-  
+
   #ecs Service
   service_name  = var.service_name
   desired_count = var.desired_count
@@ -84,18 +84,18 @@ module "ecs" {
 module "acm" {
   source = "./modules/acm"
 
-  domain_name = "tm.kamranr.com"
-  alternative_names = []
+  domain_name        = "tm.kamranr.com"
+  alternative_names  = []
   cloudflare_zone_id = var.cloudflare_zone_id
 }
 
 # Cloudlfare DNS for app Domain 
 resource "cloudflare_record" "app_domain" {
   zone_id = var.cloudflare_zone_id
-  name = "tm"
-  type = "CNAME"
+  name    = "tm"
+  type    = "CNAME"
   content = module.alb.alb_dns_name
-  proxied = false 
-  ttl = 300
+  proxied = false
+  ttl     = 300
 
 }

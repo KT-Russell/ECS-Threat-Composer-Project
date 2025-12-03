@@ -94,7 +94,7 @@ variable "log_stream_prefix" {
 }
 
 variable "lb_security_group_id" {
-  type = string
+  type        = string
   description = "SG ID of the ALB, used to allow ALB to ECS Traffic"
 }
 
