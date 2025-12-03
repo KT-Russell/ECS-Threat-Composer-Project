@@ -58,11 +58,13 @@ jobs:
      - name: Generate Image SHA Tag 
        run: echo "IMAGE_TAG_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+
+
     # STEP 6: TAG images for ECR (LATEST & SHA)
      - name: Image Tags for ECR (latest tag & SHA)
        run: |
          docker tag $IMAGE_LOCAL_NAME $ECR_REGISTRY/$ECR_REPOSITORY:latest
-         docker tag $IMAGE_LOCAL_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_SHA 
+         docker tag $IMAGE_LOCAL_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_SHA
 
     # STEP 7: PUSH IMAGE TO ECR 
      - name: Push Image to ECR
