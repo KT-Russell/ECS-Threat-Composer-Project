@@ -23,17 +23,9 @@ variable "ecs_task_role_name" {
   description = "ECS Task role name"
 }
 
-variable "ssm_kms_access" {
+variable "ecs_assume_service" {
   type = string
-}
-
-variable "ssm_parameter_arn" {
-  type = string
-}
-
-
-variable "kms_key_arn" {
-  type = string
+  description = "ecs assume service"
 }
 
 variable "ecr_name" {

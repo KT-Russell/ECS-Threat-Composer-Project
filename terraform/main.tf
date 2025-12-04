@@ -35,9 +35,10 @@ module "iam_roles" {
   ecs_execution_role_name = var.ecs_execution_role_name
   ecs_task_role_name      = var.ecs_task_role_name
   tags                    = var.tags
-  ssm_parameter_arn       = var.ssm_parameter_arn
-  kms_key_arn             = var.kms_key_arn
+  ecs_assume_service      = var.ecs_assume_service
 }
+
+
 
 module "ecs" {
   source = "./modules/ecs"

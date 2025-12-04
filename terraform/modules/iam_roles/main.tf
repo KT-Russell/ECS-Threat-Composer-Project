@@ -65,24 +65,3 @@ resource "aws_iam_role" "ecs_task" {
   })
 }
 
-resource "aws_iam_role_policy" "ssm_kms_access" {
-  count = var.ssm_parameter_arn != "" && var.kms_key_arn != "" ? 1 : 0
-  name  = "ssm-kms-access"
-  role  = aws_iam_role.ecs_task.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = ["ssm:GetParameter"]
-        Resource = var.ssm_parameter_arn
-      },
-      {
-        Effect   = "Allow"
-        Action   = ["kms:Decrypt"]
-        Resource = var.kms_key_arn
-      }
-    ]
-  })
-}
