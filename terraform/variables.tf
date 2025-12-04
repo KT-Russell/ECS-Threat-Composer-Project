@@ -24,7 +24,7 @@ variable "ecs_task_role_name" {
 }
 
 variable "ecs_assume_service" {
-  type = string
+  type        = string
   description = "ecs assume service"
 }
 

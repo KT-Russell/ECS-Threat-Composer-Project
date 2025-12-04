@@ -38,9 +38,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-        # recrusively check and diff formatting for ALL terraform files (including modules)
+        # Auto format Terraform
+      - name: Auto Format Terraform
+        run: terraform fmt -recursive
+        working-directory: terraform
+
       - name: Terraform format check
-        run: find . -name '*.tf' -exec terraform fmt -check -diff {} +
+        run: terraform fmt -check -recursive
         working-directory: terraform  
 
       - name: Terraform Init
@@ -56,8 +60,8 @@ jobs:
         run: |
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
           tflint --version
-          tflint --init   #initalise plugins and config
-          tflint           #lint against everything in terraform/dir
+          tflint --init
+          tflint          
     
       - name: Terraform Plan
         run: terraform plan -out=tfplan
