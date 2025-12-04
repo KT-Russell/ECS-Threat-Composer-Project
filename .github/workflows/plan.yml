@@ -52,11 +52,12 @@ jobs:
         working-directory: terraform
 
       - name: Install and Run TFLint
+        working-directory: terraform
         run: |
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
           tflint --version
-          tflint --init --chdir==terraform   #initalise plugins and config
-          tflint --chdir=terraform           #lint against everything in terraform/dir
+          tflint --init   #initalise plugins and config
+          tflint           #lint against everything in terraform/dir
     
       - name: Terraform Plan
         run: terraform plan -out=tfplan
