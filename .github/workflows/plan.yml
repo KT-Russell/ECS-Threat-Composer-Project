@@ -70,7 +70,7 @@ jobs:
           TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
 
       - name: Terraform Plan
-        run: terraform plan -var-file="terraform.tfvars" -out=tfplan
+        run: terraform plan -out=tfplan
         working-directory: terraform 
         env:
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
