@@ -1,11 +1,13 @@
 variable "vpc_cidr" {
   type        = string
   description = "CIDR block for the VPC"
+  default = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
   type        = list(string)
   description = "List of public subnet CIDRs"
+  default = [ ["10.0.1.0/24", "10.0.2.0/24"] ]
 }
 
 variable "tags" {
@@ -51,6 +53,7 @@ variable "region" {
 variable "cluster_name" {
   type        = string
   description = "Name of ECS Cluster"
+  default = "threat-mod-cluster"
 }
 
 variable "cluster_insight_name" {
@@ -67,20 +70,24 @@ variable "cluster_insight_value" {
 variable "service_name" {
   description = "Name of the ECS service"
   type        = string
+  default = "threat-mod-service"
 }
 
 variable "desired_count" {
   type = number
+  default = 1
 }
 
 variable "container_name" {
   description = "Name of the container"
   type        = string
+  default = "threat-mod-app"
 }
 
 variable "container_port" {
   description = "Container port"
   type        = number
+  default = 3000
 }
 
 variable "subnet_ids" {
@@ -136,6 +143,7 @@ variable "ssl_policy" {
 
 variable "health_check_path" {
   type = string
+  default = "/health.json"
 }
 
 variable "availability_zones" {
