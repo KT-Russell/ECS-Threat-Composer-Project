@@ -8,6 +8,7 @@ on:
 env: 
   AWS_REGION: eu-west-2
   CLOUDLFARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
 jobs:
   terraform-apply:
