@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Terraform Plan"]
     types: [completed]
-    
+
 env: 
   AWS_REGION: eu-west-2
   CLOUDLFARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -48,7 +48,8 @@ jobs:
       - name: Terraform Apply 
         run: terraform apply -auto-approve tfplan
         working-directory: terraform 
-
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Post-Deploy Health Check
         run: curl -f https://tm.kamranr.com/health.json
