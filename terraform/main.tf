@@ -88,6 +88,8 @@ module "acm" {
   domain_name        = "tm.kamranr.com"
   alternative_names  = []
   cloudflare_zone_id = var.cloudflare_zone_id
+  cloudflare_api_token = var.cloudflare_api_token
+  
 }
 
 # Cloudlfare DNS for app Domain 

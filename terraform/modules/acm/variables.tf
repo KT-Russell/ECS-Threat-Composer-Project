@@ -14,6 +14,9 @@ variable "cloudflare_zone_id" {
   description = "Cloudflare zone ID"
 }
 
+variable "cloudflare_api_token" {
+  type = string
+}
 variable "tags" {
   type    = map(string)
   default = {}
