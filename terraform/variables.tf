@@ -56,10 +56,12 @@ variable "cluster_name" {
 variable "cluster_insight_name" {
   description = "Name of the ECS cluster setting"
   type        = string
+  default = "containerInsights"
 }
 variable "cluster_insight_value" {
   type        = string
   description = "Value of ECS Cluster settings"
+  default = "enabled"
 }
 
 variable "service_name" {
