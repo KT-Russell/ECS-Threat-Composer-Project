@@ -138,6 +138,7 @@ variable "health_check_path" {
 
 variable "availability_zones" {
   type = list(string)
+  default = [ "eu-west-2a", "eu-west-2b" ]
 }
 
 variable "alb_name" {
