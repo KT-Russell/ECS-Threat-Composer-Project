@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Terraform Plan"]
     types: [completed]
-
+    
 env: 
   AWS_REGION: eu-west-2
   CLOUDLFARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
