@@ -1,5 +1,6 @@
 variable "alb_name" {
   type = string
+  default = "threat-mod-alb"
 }
 
 variable "vpc_id" {

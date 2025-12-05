@@ -142,4 +142,5 @@ variable "availability_zones" {
 
 variable "alb_name" {
   type = string
+  default = "threat-mod-alb"
 }
