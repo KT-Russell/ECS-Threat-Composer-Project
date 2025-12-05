@@ -11,10 +11,6 @@ terraform {
   }
 }
 
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
-
 
 resource "aws_acm_certificate" "application" {
   domain_name               = var.domain_name
