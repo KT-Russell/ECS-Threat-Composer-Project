@@ -1,3 +1,7 @@
+data "aws_ecr_repository" "app" {
+  name = var.ecr_name
+}
+
 resource "aws_ecs_cluster" "threat-mod" {
   name = var.cluster_name
 

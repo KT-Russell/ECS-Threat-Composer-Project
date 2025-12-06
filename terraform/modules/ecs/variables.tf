@@ -3,6 +3,11 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "ecr_name" {
+  type = string
+  default = "threat-mod-app"
+}
+
 variable "cluster_insight_name" {
   description = "name of the cluster setting name"
   type        = string
