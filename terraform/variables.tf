@@ -123,6 +123,7 @@ variable "task_memory" {
 variable "image_url" {
   description = "Image URL in ECR"
   type        = string
+  default = "979075842411.dkr.ecr.eu-west-2.amazonaws.com/threat-mod-app:latest"
 }
 
 variable "cloudflare_api_token" {
