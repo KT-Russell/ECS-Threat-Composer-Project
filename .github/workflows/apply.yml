@@ -39,14 +39,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan
-          path: terraform/tfplan 
+          path: terraform
 
       - name: Terraform Init 
         run: terraform init 
         working-directory: terraform 
 
       - name: Terraform Apply 
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve terraform/tfplan
         working-directory: terraform 
         env:
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
