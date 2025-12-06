@@ -1,3 +1,8 @@
+data "aws_ecr_repository" "app" {
+  name = "threat-mod-app"
+}
+
+
 module "vpc" {
   source             = "./modules/vpc"
   vpc_cidr           = var.vpc_cidr
