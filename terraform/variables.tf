@@ -18,16 +18,19 @@ variable "tags" {
 variable "ecs_execution_role_name" {
   type        = string
   description = "Name of ECS execution role"
+  default = "ecsExecutionRole"
 }
 
 variable "ecs_task_role_name" {
   type        = string
   description = "ECS Task role name"
+  default = "ecsTaskRole"
 }
 
 variable "ecs_assume_service" {
   type        = string
   description = "ecs assume service"
+  default = "ecs-tasks.amazonaws.com"
 }
 
 variable "ecr_name" {
@@ -92,10 +95,12 @@ variable "container_port" {
 
 variable "subnet_ids" {
   type = list(string)
+  default = []
 }
 
 variable "security_group_ids" {
   type = list(string)
+  default = [ ]
 }
 
 variable "task_family" {
@@ -106,11 +111,13 @@ variable "task_family" {
 variable "task_cpu" {
   description = "CPU units for the task"
   type        = string
+  default = "256"
 }
 
 variable "task_memory" {
   description = "Memory for the task"
   type        = string
+  default = "512"
 }
 
 variable "image_url" {
@@ -130,10 +137,12 @@ variable "cloudflare_zone_id" {
 
 variable "target_group_name" {
   type = string
+  default = "threat-mod-tg"
 }
 
 variable "target_type" {
   type = string
+  default = "ip"
 }
 
 variable "ssl_policy" {
