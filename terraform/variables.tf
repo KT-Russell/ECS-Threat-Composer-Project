@@ -110,7 +110,9 @@ variable "security_group_ids" {
 variable "task_family" {
   description = "Family name for ECS task definition"
   type        = string
+  default = "threat-mod-task"
 }
+
 
 variable "task_cpu" {
   description = "CPU units for the task"
