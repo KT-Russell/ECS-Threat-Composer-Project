@@ -13,6 +13,10 @@ variable "public_subnets" {
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to resources"
+  default = {
+    "Environment" = "dev"
+    "Project"     = "threat-mod"
+  }
 }
 
 variable "ecs_execution_role_name" {
