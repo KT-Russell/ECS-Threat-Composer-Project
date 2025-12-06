@@ -1,4 +1,4 @@
-#data "aws_ecr_repository" "app" {
+# data "aws_ecr_repository" "app" {
   name = var.ecr_name
-#}
+# }
 #
