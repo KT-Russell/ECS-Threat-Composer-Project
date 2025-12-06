@@ -63,7 +63,7 @@ module "ecs" {
   task_memory        = var.task_memory
   container_name     = var.container_name
   container_port     = var.container_port
-  image_url          = "${module.ecr.repository_url}:latest"
+  image_url          = "${data.aws_ecr.repository_url}:latest"
 
   # networkorking
   subnet_ids         = module.vpc.public_subnets_ids
