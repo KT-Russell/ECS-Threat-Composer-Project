@@ -9,7 +9,8 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-
+  TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
 
 jobs:
   destroy:
@@ -41,3 +42,7 @@ jobs:
     - name: Terraform Destroy
       run: terraform destroy -auto-approve  
       working-directory: terraform
+      env:
+        TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+

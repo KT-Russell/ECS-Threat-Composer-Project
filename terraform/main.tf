@@ -22,13 +22,6 @@ module "alb" {
   certificate_arn = module.acm.certificate_arn
 }
 
-module "ecr" {
-  source = "./modules/ecr"
-
-  ecr_name             = var.ecr_name
-  image_tag_mutability = var.image_tag_mutability
-  scan_on_push         = var.scan_on_push
-}
 
 module "iam_roles" {
   source                  = "./modules/iam_roles"

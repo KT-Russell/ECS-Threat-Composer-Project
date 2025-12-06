@@ -1,5 +1,6 @@
 variable "ecr_name" {
   type = string
+  default = "threat-mod-app"
 }
 
 variable "image_tag_mutability" {
