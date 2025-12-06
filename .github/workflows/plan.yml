@@ -76,10 +76,10 @@ jobs:
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
 
-      - name: Upload Terraform Plan Artifact 
-        uses: actions/upload-artifact@v4
-        with:
-          name: tfplan
-          path: terraform/tfplan
+      # - name: Upload Terraform Plan Artifact 
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: tfplan
+      #   path: terraform/tfplan
 
       
