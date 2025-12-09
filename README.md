@@ -50,7 +50,7 @@ Destroy (manual confirmation with "YES")
 ---
 
 ## Project Structure
-
+```text
 ./
 ├── .github
 │   └── workflows
@@ -73,7 +73,7 @@ Destroy (manual confirmation with "YES")
 │   ├── variables.tf
 │   └── outputs.tf
 └── README.md
-
+```
 ---
 
 ## Local app setup 💻
@@ -87,6 +87,7 @@ serve -s build
 Then visit: 
 http://localhost:3000
 
+```
 ---
 
 ## CI/CD Workflow 
@@ -148,37 +149,37 @@ May require rerun due to service startup latency.
 
 ### Domain Dashboard
 
-![Dashboard](/app/images/tm.kamranr.com-dashboard.png)
+![Dashboard](app/images/tm.kamranr.com-dashboard.png)
 
 ---
 
 ### Security Certificate 
 
-![Security Lock](/app/images/certificate-lock.png)
+![Security Lock](app/images/certificate-lock.png)
 
 ---
 
 ### Docker Build
 
-![Docker Build](/app/images/docker-build.png)
+![Docker Build](app/images/docker-build.png)
 
 ---
 
 ### Terraform Plan
 
-![Terraform Plan](/app/images/plan.png)
+![Terraform Plan](app/images/plan.png)
 
 ---
 
 ### Terraform Apply
 
-![Terraform Apply](/app/images/Apply.png)
+![Terraform Apply](app/images/Apply.png)
 
 ---
 
 ### Terraform Destroy
 
-![Terraform Destroy](/app/images/Terraform-destroy.png)
+![Terraform Destroy](app/images/Terraform-destroy.png)
 
 ---
 
