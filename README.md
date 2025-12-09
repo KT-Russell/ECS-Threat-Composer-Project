@@ -1,24 +1,80 @@
-<div align="center">
-    <img src="./images/coderco.jpg" alt="CoderCo" width="300"/>
-</div>
+# Containerised Application Deployment on AWS ECS Fargate
 
-# CoderCo Assignment 1 - Open Source App Hosted on ECS with Terraform 
+This project deploys a production-ready web application (Amazon Threat-Composer App) onto AWS ECS Fargate using Terraform, with a fully automated CI/CD pipeline powered by GitHub Actions. Instead of manually assembling cloud services, everything is orchestrated through code for speed, safety, and consistency.
 
-This project is based on Amazon's Threat Composer Tool, an open source tool designed to facilitate threat modeling and improve security assessments. You can explore the tool's dashboard here: [Threat Composer Tool](https://awslabs.github.io/threat-composer/workspaces/default/dashboard)
+---
 
-## Task/Assignment 📝
+## Overview:
 
-- Create your own repository and complete the task there. You may create a `app` in your repo and copy all the files in this directory into it. Or alternatively, you can use this directory as is. Your choice.
+- Runs inside a container
+- Stored in Amazon ECR
+- Hosted on ECS Fargate
+- Traffic routed via ALB
+- Secured with HTTPS (ACM certificate)
+- DNS via Cloudflare
+- Deploys automatically on changes
 
-- Your task will be to create a container image for the app, push it to ECR (recommended) or DockerHub. Ideally, you should use a CI/CD pipeline to build, test, and push the container image.
+---
 
-- Deploy the app on ECS using Terraform. All the resources should be provisioned using Terraform. Use TF modules.
+## Architecture Diagram
 
-- Make sure the app is live on `https://tm.<your-domain>` or `https://tm.labs.<your-domain>`
+![ECS Architecture](/app/images/ECS-Architecture.png)
 
-- App must use HTTPS. Hosted on ECS. Figure out the rest. Once app is live, add screenshots to the README.md file.
+---
 
-- Add architecture diagram of how the infrastructure is setup. (Use Lucidchart or draw.io or mermaid) You are free to use any diagramming tool.
+## End-to-End Automation Pipeline:
+Push to main
+↓
+Docker Build & Push To ECR
+↓
+Terraform Plan
+↓
+Terraform Apply
+↓
+Health Check
+↓
+Destroy (manual confirmation with "YES")
+
+
+---
+## Features:
+
+- Zero manual provisioning (100% IaC)
+- Push-to-deploy CI/CD pipeline
+- Automated health checks after deployment
+- Role-based access using OIDC (no static AWS keys)
+- Built-in security scanning (Trivy)
+- Automatic rollback if unhealthy
+- One-click teardown via Terraform Destroy
+
+---
+
+## Project Structure
+
+./
+├── .github
+│   └── workflows
+│       ├── apply.yml
+│       ├── destroy.yml
+│       ├── plan.yml
+│       └── docker-build.yml
+├── app
+│   ├── Dockerfile
+|
+├── terraform
+│   ├── modules
+│   │   ├── acm/
+│   │   ├── alb/
+│   │   ├── ecs/
+│   │   ├── iam_roles/
+│   │   └── vpc/
+│   ├── main.tf
+│   ├── provider.tf
+│   ├── variables.tf
+│   └── outputs.tf
+└── README.md
+
+---
 
 ## Local app setup 💻
 
@@ -28,22 +84,104 @@ yarn build
 yarn global add serve
 serve -s build
 
-#yarn start
-http://localhost:3000/workspaces/default/dashboard
+Then visit: 
+http://localhost:3000
 
-## or
-yarn global add serve
-serve -s build
-```
+---
 
-## Useful links 🔗
+## CI/CD Workflow 
 
-- [Terraform AWS Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [Terraform AWS ECS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster)
-- [Terraform Docs](https://www.terraform.io/docs/index.html)
-- [ECS Docs](https://docs.aws.amazon.com/ecs/latest/userguide/what-is-ecs.html)
+> Begins automatically on `git push main`
 
-## Advice & Tips �
+---
 
-- This is just a simple app, you may use another app if you'd like. 
-- Use best practices for your Terraform code. Use best practices for your container image. Use best practices for your CI/CD pipeline.
+### 1. Docker Build & Push
+
+- Build image
+- Security scan with **Trivy**
+- Tags:
+  - `latest`
+  - commit SHA
+- Push to **Amazon ECR**
+
+---
+
+### 2. Terraform Plan
+
+Triggered after Docker completes.
+
+- Validates and lints Terraform
+- Uses **OIDC** to assume AWS credentials (no static keys)
+- Generates plan output
+
+---
+
+### 3. Terraform Apply
+
+Creates:
+
+- VPC & Subnets
+- ECS Cluster & Service
+- Application Load Balancer
+- Listener + Target Group
+- IAM Roles & Policies
+- ACM Certificate
+- Cloudflare DNS Record
+
+Post-deploy health check:
+`curl https://tm.kamranr.com/health.json`
+
+
+If unhealthy → pipeline fails.  
+May require rerun due to service startup latency.
+
+---
+
+### 4. Terraform Destroy (Manual)
+
+- Select workflow
+- Confirm with: `YES` 
+- Once confirmed with YES all resources will be destroyed and cleaned up.
+
+
+---
+
+### Domain Dashboard
+
+![Dashboard](/app/images/tm.kamranr.com-dashboard.png)
+
+---
+
+### Security Certificate 
+
+![Security Lock](/app/images/certificate-lock.png)
+
+---
+
+### Docker Build
+
+![Docker Build](/app/images/docker-build.png)
+
+---
+
+### Terraform Plan
+
+![Terraform Plan](/app/images/plan.png)
+
+---
+
+### Terraform Apply
+
+![Terraform Apply](/app/images/Apply.png)
+
+---
+
+### Terraform Destroy
+
+![Terraform Destroy](/app/images/Terraform-destroy.png)
+
+---
+
+
+
+
