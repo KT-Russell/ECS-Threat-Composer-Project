@@ -161,7 +161,7 @@ May require rerun due to service startup latency.
 
 ### Docker Build
 
-![Docker Build](app/images/docker-build.png)
+![Docker Build](app/images/Docker-build.png)
 
 ---
 
